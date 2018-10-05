@@ -1,3 +1,4 @@
+import { AuthGuard } from './_guard/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
 
 // Layout import
@@ -15,14 +16,14 @@ const appRoutes: Routes = [
     path: '',
     component: SiteLayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
-      { path: 'about', component: UsersComponent },
+      { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+      { path: 'about', component: UsersComponent, canActivate: [AuthGuard]},
     ]
   },
 
   // no layout routes
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard]},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 
